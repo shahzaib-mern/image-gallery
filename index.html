@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery | Albums & Lightbox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="gallery-container">
+        <!-- Header -->
+        <header>
+            <h1><i class="fas fa-images"></i> Image Gallery</h1>
+            <p>Organize, upload, and explore your photos with albums</p>
+        </header>
+
+        <!-- Albums Overview Screen -->
+        <div id="albumsScreen" class="albums-screen">
+            <div class="screen-header">
+                <h2><i class="fas fa-folder-open"></i> Your Albums</h2>
+                <p>Select an album to view its images</p>
+                <button id="createAlbumBtn" class="primary-btn" style="margin-top:18px"><i class="fas fa-folder-plus"></i> Create New Album</button>
+            </div>
+            <div id="albumsGrid" class="albums-grid"></div>
+        </div>
+
+        <!-- Gallery Screen (hidden initially) -->
+        <div id="galleryScreen" style="display:none">
+            <div class="gallery-back">
+                <button id="backToAlbums" class="action-btn"><i class="fas fa-arrow-left"></i> Back to Albums</button>
+                <h2 id="galleryTitle"><i class="fas fa-folder"></i> Album</h2>
+            </div>
+
+            <!-- Toolbar: Albums, Search, View Toggle, Import/Export -->
+            <div class="toolbar">
+                <!-- Album Selector -->
+                <div class="album-section">
+                    <label for="albumSelect"><i class="fas fa-folder-open"></i> Album</label>
+                    <select id="albumSelect">
+                        <option value="default">Default</option>
+                        <option value="nature">Nature</option>
+                        <option value="city">City</option>
+                        <option value="travel">Travel</option>
+                        <option value="personal">Personal</option>
+                    </select>
+                    <button id="newAlbumBtn" class="icon-btn" title="New Album"><i class="fas fa-plus"></i></button>
+                </div>
+
+                <!-- Search -->
+                <div class="search-section">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search images...">
+                </div>
+
+                <!-- View Toggle & Filters -->
+                <div class="view-section">
+                    <button id="favFilterBtn" class="icon-btn" title="Show Favorites"><i class="far fa-heart"></i></button>
+                    <button id="gridViewBtn" class="icon-btn active" title="Grid View"><i class="fas fa-th"></i></button>
+                    <button id="listViewBtn" class="icon-btn" title="List View"><i class="fas fa-list"></i></button>
+                </div>
+
+                <!-- Import / Export -->
+                <div class="io-section">
+                    <button id="importBtn" class="action-btn"><i class="fas fa-file-import"></i> Import</button>
+                    <input type="file" id="importFile" accept=".json" style="display:none">
+                    <button id="exportBtn" class="action-btn"><i class="fas fa-file-export"></i> Export</button>
+                </div>
+            </div>
+
+            <!-- Upload Area -->
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-box">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drag & drop images here or <span>browse</span></p>
+                    <input type="file" id="uploadInput" accept="image/*" multiple>
+                </div>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <span id="statsText"><i class="fas fa-images"></i> 0 images</span>
+                <span id="albumStats"><i class="fas fa-folder"></i> Album: Default</span>
+            </div>
+
+            <!-- Gallery Grid / List -->
+            <div id="galleryGrid" class="gallery-grid"></div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state" style="display:none">
+                <i class="fas fa-image"></i>
+                <p>No images found in this album.</p>
+                <p class="sub">Upload some photos to get started!</p>
+            </div>
+        </div>
+
+        <!-- Lightbox Modal -->
+        <div id="lightbox" class="lightbox">
+            <button class="lightbox-close"><i class="fas fa-times"></i></button>
+            <button class="lightbox-prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="lightbox-next"><i class="fas fa-chevron-right"></i></button>
+
+            <!-- Lightbox Actions Toolbar -->
+            <div class="lightbox-actions">
+                <button id="lbFavBtn" class="lb-action-btn" title="Toggle Favorite"><i class="far fa-heart"></i></button>
+                <button id="lbSlideshowBtn" class="lb-action-btn" title="Slideshow"><i class="fas fa-play"></i></button>
+                <button id="lbEditBtn" class="lb-action-btn" title="Edit Details"><i class="fas fa-pen"></i></button>
+                <button id="lbDeleteBtn" class="lb-action-btn" title="Delete Image"><i class="fas fa-trash"></i></button>
+            </div>
+
+            <div class="lightbox-content">
+                <img id="lightboxImg" src="" alt="">
+                <div class="lightbox-caption">
+                    <h3 id="lbTitle"></h3>
+                    <p id="lbCaption"></p>
+                    <span id="lbCategory"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Modal -->
+        <div id="editModal" class="modal">
+            <div class="modal-content">
+                <h3><i class="fas fa-pen"></i> Edit Image Details</h3>
+                <div class="form-group">
+                    <label>Title</label>
+                    <input type="text" id="editTitle" placeholder="Image title">
+                </div>
+                <div class="form-group">
+                    <label>Caption</label>
+                    <input type="text" id="editCaption" placeholder="Image caption">
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="editCategory">
+                        <option value="nature">Nature</option>
+                        <option value="city">City</option>
+                        <option value="animals">Animals</option>
+                        <option value="abstract">Abstract</option>
+                        <option value="travel">Travel</option>
+                        <option value="personal">Personal</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button id="editCancel" class="nav-btn">Cancel</button>
+                    <button id="editSave" class="primary-btn">Save Changes</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Album Modal -->
+        <div id="albumModal" class="modal">
+            <div class="modal-content">
+                <h3><i class="fas fa-folder-plus"></i> Create New Album</h3>
+                <div class="form-group">
+                    <label>Album Name</label>
+                    <input type="text" id="newAlbumName" placeholder="My Album">
+                </div>
+                <div class="modal-actions">
+                    <button id="albumCancel" class="nav-btn">Cancel</button>
+                    <button id="albumCreate" class="primary-btn">Create</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="script.js"></script>
+    </div>
+</body>
+</html>
