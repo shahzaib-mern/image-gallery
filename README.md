@@ -22,16 +22,6 @@ A fully-featured, responsive image gallery built with **pure Vanilla JavaScript*
 - **🎨 Glassmorphism UI** - Modern gradients, blur effects, smooth animations
 - **📱 Fully Responsive** - Mobile-first design
 
-### 🖼️ Screenshots
-
-| Albums Overview | Gallery Grid View | Lightbox Modal |
-| --- | --- | --- |
-| ![Albums](screenshots/albums.png) | ![Grid](screenshots/grid.png) | ![Lightbox](screenshots/lightbox.png) |
-
-| List View | Upload Area | Edit Modal |
-| --- | --- | --- |
-| ![List](screenshots/list.png) | ![Upload](screenshots/upload.png) | ![Edit](screenshots/edit.png) |
-
 ### 🚀 Quick Start
 
 1. **No setup required** - Just open `index.html` in any modern browser
