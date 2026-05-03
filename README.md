@@ -1,5 +1,7 @@
 # Image Gallery - Vanilla JS
 
+[![Vanilla JS](https://img.shields.io/badge/Vanilla%20JS-100%25-blueviolet)](https://vanillajs.net/)
+
 ## 🎨 Modern Image Gallery App
 
 A fully-featured, responsive image gallery built with **pure Vanilla JavaScript**, **HTML5**, and **CSS3**. No frameworks or libraries required!
